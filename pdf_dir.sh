@@ -14,10 +14,15 @@ function print_help {
     echo -e "\t -o output_directory: directory to store the PDF files.\n\t\tOptional, default: input directory"
     echo -e "\t -m: applies markdown parser to input files"
     echo -e "\nExamples:"
-    echo -e "\t $COMMAND -e txt         #converts all txt files of current directory to PDF"
-    echo -e "\t $COMMAND -e txt -m      #Same, but intepreting the content as markdown"
-    echo -e "\t $COMMAND                #converts all docx files of current directory to PDF"
-    echo -e "\t $COMMAND -d ~/Downloads #converts all docx files of current user's Download directory to PDF"
+    echo -e "\t $COMMAND -e txt     # converts all txt files in current directory to PDF"
+    echo -e "\t $COMMAND -e txt -m  #Same, but intepreting the content as markdown"
+    echo -e "\t $COMMAND            #converts all docx files in current directory to PDF"
+    echo -e "\t $COMMAND -d ~/Downloads"
+    echo -e "\t # converts all docx files in current user's Download directory to PDF"
+    echo -e "\t $COMMAND -d ~/Downloads -o ~/Documents/out"
+	echo -e "\t # converts all docx files in current user's Download directory to PDF,"
+	echo -e "\t # placing the PDF files in Documents/out (relative to current user's"
+	echo -e "\t # home)"
 }
 
 
