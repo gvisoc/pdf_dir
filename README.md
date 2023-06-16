@@ -56,9 +56,9 @@ Examples:
 	     # Download directory to PDF
 	 pdf_dir.sh -d ~/Downloads -o ~/Documents/out
 	     # converts all docx files in current user's
-	     # Download directory to PDF,
-	     # placing the PDF files in Documents/out (relative
-	     # to current user's home)
+	     # Download directory to PDF, placing the PDF 
+		 # files in Documents/out (relative to current 
+		 # user's home)
 
 ```
 

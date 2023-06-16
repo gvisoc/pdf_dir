@@ -27,9 +27,9 @@ function print_help {
     echo -e "\t     # Download directory to PDF"
     echo -e "\t $COMMAND -d ~/Downloads -o ~/Documents/out"
 	echo -e "\t     # converts all docx files in current user's"
-    echo -e "\t     # Download directory to PDF,"
-	echo -e "\t     # placing the PDF files in Documents/out (relative"
-    echo -e "\t     # to current user's home)"
+    echo -e "\t     # Download directory to PDF, placing the PDF"
+    echo -e "\t     # files in Documents/out (relative to current"
+    echo -e "\t     # user's home)"
 }
 
 
