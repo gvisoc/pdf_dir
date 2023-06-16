@@ -1,5 +1,9 @@
 # pdf_dir.sh
-This is is a bash script over `pandoc` that converts all files in a directory, matching an extension, into PDF. Optionally, a markdown parser can be applied.
+This is is a bash script over `pandoc` that converts all files in a directory, matching an extension, into PDF. 
+
+The output directory is the same directory where the original documents are found.
+
+Optionally, a markdown parser can be applied.
 
 ## Usage
 - Install `pandoc` and the relevant extensions for it to be able to write PDF your system. It is usually a TeX/LaTeX distribution (e.g.: BasicTeX on Mac). Check [pandoc](https://pandoc.org/installing.html) for options on this.
@@ -14,6 +18,8 @@ This is is a bash script over `pandoc` that converts all files in a directory, m
 ./pdf_dir.sh -e odt -d ~/Documents/reports 
 # converts all odt documents into PDF, in the document Documents/reports relative to the current user's home.
 ```
+
+It's important to note that the PDF files will be left in the same directory where the original files are.
 
 The command has a help option (any invalid option will print the help text):
 
