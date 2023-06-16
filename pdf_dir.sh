@@ -34,8 +34,8 @@ while getopts ":d:e:m" OPT; do
 
     case $OPTARG in
         -*) if [[ $OPT != "m" ]]; then 
-            $echo "ERROR: Option $OPT needs a valid argument"
-            exit 1
+            echo "ERROR: Option $OPT needs a valid argument"
+            exit 2
         fi
         ;;
     esac
@@ -44,6 +44,9 @@ done
 USERDIR=$(pwd)
 if [[ -n $WORKDIR && -d $WORKDIR ]]; then
     cd $WORKDIR
+else
+    echo "Error --the directory specified, $WORKDIR, doesn't exist."
+    exit 3
 fi
 
 FILENAMES=$(ls *.${EXTENSION})
@@ -58,7 +61,7 @@ for FILE in $FILENAMES; do
     if [[ $? -ne 0 ]]; then
         echo "Error processing file $FILE";
         cd $USERDIR
-        exit 1
+        exit 4
     fi
 done
 cd $USERDIR
