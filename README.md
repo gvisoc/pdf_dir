@@ -33,22 +33,33 @@ The command has a help option (any invalid option will print the help text):
 $ pdf_dir.sh -h
 pdf_dir.sh: convert all documents in a directory to PDF.
 
-USAGE: pdf_dir.sh [-e extension] [-d directory] [-m]
+USAGE: pdf_dir.sh [-e extension] [-d input dir.] [-o output dir.] [-m]
 	 -e extension: of the files to process, no dots (.) or wildcards,
 		e.g.: docx. Optional, default: docx
-	 -d directory: directory to process. Optional, default: current directory
+	 -d input dir.: directory to process.
+		Optional, default: current directory
+	 -o output dir.: directory to store the PDF files.
+		Optional, default: the input directory
 	 -m: applies markdown parser to input files
 
 Examples:
-	 pdf_dir.sh -e txt      # converts all txt files of current directory to PDF
-	 pdf_dir.sh -e txt -m 	# Same, but intepreting the content as markdown
-	 pdf_dir.sh				# converts docx files in current directory to PDF
-	 pdf_dir.sh -d ~/Downloads 
-	 # converts all docx files in current user's Download directory to PDF
+	 pdf_dir.sh -e txt
+	     # converts all txt files in current directory
+	     # to PDF
+	 pdf_dir.sh -e txt -m
+	     # Same, but intepreting the content as markdown
+	 pdf_dir.sh
+	     # converts all docx files in current directory
+	     # to PDF
+	 pdf_dir.sh -d ~/Downloads
+	     # converts all docx files in current user's
+	     # Download directory to PDF
 	 pdf_dir.sh -d ~/Downloads -o ~/Documents/out
-	 # converts all docx files in current user's Download directory to PDF,
-	 # placing the PDF files in Documents/out (relative to current user's
-	 # home)
+	     # converts all docx files in current user's
+	     # Download directory to PDF,
+	     # placing the PDF files in Documents/out (relative
+	     # to current user's home)
+
 ```
 
 ## Adding the script to the PATH
