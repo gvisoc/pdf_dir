@@ -4,7 +4,6 @@ EXTENSION="docx"
 WORK_DIR=$(pwd)
 MARKDOWN=0
 OUTPUT_DIR=""
-USER_DIR=$(pwd)
 
 function print_help {
     COMMAND="$(echo $0 | awk -F '/' '{print $NF}')"
@@ -50,37 +49,35 @@ if [[ ! -n "$OUTPUT_DIR" ]]; then
     OUTPUT_DIR="$WORK_DIR"
 fi
 
-if [[ -n "$WORK_DIR" && -d "$WORK_DIR" ]]; then
-    cd "$WORK_DIR"
-else
+if [[ ! -n "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
     echo "Error --the directory specified, $WORK_DIR, doesn't exist."
     exit 3
 fi
 
 if [[ ! -d "$OUTPUT_DIR" ]]; then
-    echo "Error --the output directory specified, $OUTPUTDIR, doesn't exist"
-    cd "$USER_DIR"
+    echo "Error --the output directory specified, $OUTPUT_DIR, doesn't exist"
     exit 3
 fi
 
-FILENAMES=$(ls -1 *."$EXTENSION")
+echo "Work directory: $WORK_DIR"
+echo "Output directory: $OUTPUT_DIR"
+
+FILENAMES=$(ls -1 "$WORK_DIR"/*."$EXTENSION")
 
 
 # This loop is explained in this answer from StackOverflow
 # https://superuser.com/a/284226
 while IFS= read -r FILE || [[ -n $FILE ]]; do
-   FILE_OUT="$(echo "$FILE" | awk -F '.' '{print $1}').pdf"
+    FILE="$(echo $FILE | awk -F '/' '{print $NF}')"
+    FILE_OUT="$(echo "$FILE" | awk -F '.' '{print $1}').pdf"
     if [[ $MARKDOWN -eq 0 ]]; then
-        pandoc -o "$OUTPUT_DIR/$FILE_OUT" "$FILE"
+        pandoc -o "$OUTPUT_DIR/$FILE_OUT" "$WORK_DIR/$FILE"
     else
-        pandoc -f markdown -o "$OUTPUT_DIR/$FILE_OUT" "$FILE"
+        pandoc -f markdown -o "$OUTPUT_DIR/$FILE_OUT" "$WORK_DIR/$FILE"
     fi
     if [[ $? -ne 0 ]]; then
-        echo "Error processing file $FILE";
-        cd $USER_DIR
+        echo "Error processing file $WORK_DIR/$FILE";
         exit 4
     fi 
 done < <(printf '%s' "$FILENAMES")
-
-cd "$USER_DIR"
 exit 0
