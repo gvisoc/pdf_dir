@@ -51,6 +51,9 @@ fi
 
 FILENAMES=$(ls -1 *."$EXTENSION")
 
+
+# This loop is explained in this answer from StackOverflow
+# https://superuser.com/a/284226
 while IFS= read -r FILE || [[ -n $FILE ]]; do
    FILE_OUT="$(echo "$FILE" | awk -F '.' '{print $1}').pdf"
     if [[ $MARKDOWN -eq 0 ]]; then
