@@ -5,7 +5,7 @@ WORKDIR=$(pwd)
 MARKDOWN=0
 
 function print_help {
-    COMMAND=$(echo $0 | awk -F '/' '{print $NF}')
+    COMMAND="$(echo $0 | awk -F '/' '{print $NF}')"
     echo -e "$COMMAND: convert all documents in a directory to PDF."
     echo -e "\nUSAGE: $COMMAND [-e extension] [-d directory] [-m]"
     echo -e "\t -e extension: of the files to process, no dots (.) or wildcards,\n\t\te.g.: docx. Optional, default: docx"
@@ -20,10 +20,10 @@ function print_help {
 
 
 while getopts ":d:e:m" OPT; do
-    case $OPT in 
-        d) WORKDIR=$(realpath $OPTARG)
+    case "$OPT" in
+        d) WORKDIR=$(realpath "$OPTARG")
         ;;
-        e) EXTENSION=$OPTARG
+        e) EXTENSION="$OPTARG"
         ;;
         m) MARKDOWN=1
         ;;
@@ -32,8 +32,8 @@ while getopts ":d:e:m" OPT; do
         ;;
     esac
 
-    case $OPTARG in
-        -*) if [[ $OPT != "m" ]]; then 
+    case "$OPTARG" in
+        -*) if [[ "$OPT" != "m" ]]; then 
             echo "ERROR: Option $OPT needs a valid argument"
             exit 2
         fi
@@ -42,17 +42,17 @@ while getopts ":d:e:m" OPT; do
 done
 
 USERDIR=$(pwd)
-if [[ -n $WORKDIR && -d $WORKDIR ]]; then
-    cd $WORKDIR
+if [[ -n "$WORKDIR" && -d "$WORKDIR" ]]; then
+    cd "$WORKDIR"
 else
     echo "Error --the directory specified, $WORKDIR, doesn't exist."
     exit 3
 fi
 
-FILENAMES=$(ls *.${EXTENSION})
+FILENAMES=$(ls -1 *."$EXTENSION")
 
-for FILE in $FILENAMES; do
-    FILE_OUT="$(echo "$FILE" | awk -F '.' '{print $1}').pdf"
+while IFS= read -r FILE || [[ -n $FILE ]]; do
+   FILE_OUT="$(echo "$FILE" | awk -F '.' '{print $1}').pdf"
     if [[ $MARKDOWN -eq 0 ]]; then
         pandoc -o "$FILE_OUT" "$FILE"
     else
@@ -62,7 +62,8 @@ for FILE in $FILENAMES; do
         echo "Error processing file $FILE";
         cd $USERDIR
         exit 4
-    fi
-done
-cd $USERDIR
+    fi 
+done < <(printf '%s' "$FILENAMES")
+
+cd "$USERDIR"
 exit 0
