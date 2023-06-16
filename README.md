@@ -52,4 +52,6 @@ PATH="$HOME/Applications/Scripts:$PATH"
 
 Save and close the file (for `nano`, use CTRL+O to save (confirm with return) and then CTRL+X to exit).
 
-Otherwise, adapt the `$HOME/Applications/Scripts` part of the example to your case
+Otherwise, adapt the `$HOME/Applications/Scripts` part of the example to your case.
+
+After making this modification, either reopen the terminal or *source* the changes by running `source .zshrc`, `source ~/.bashrc`, or the relevant file of your system --the one you've just changed.
