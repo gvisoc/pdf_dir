@@ -1,9 +1,10 @@
 #!/bin/sh
 
 EXTENSION="docx"
-WORKDIR=$(pwd)
+WORK_DIR=$(pwd)
 MARKDOWN=0
 OUTPUT_DIR=""
+USER_DIR=$(pwd)
 
 function print_help {
     COMMAND="$(echo $0 | awk -F '/' '{print $NF}')"
@@ -21,9 +22,9 @@ function print_help {
 }
 
 
-while getopts ":d:e:m" OPT; do
+while getopts ":d:e:o:m" OPT; do
     case "$OPT" in
-        d) WORKDIR=$(realpath "$OPTARG")
+        d) WORK_DIR=$(realpath "$OPTARG")
         ;;
         e) EXTENSION="$OPTARG"
         ;;
@@ -45,21 +46,20 @@ while getopts ":d:e:m" OPT; do
     esac
 done
 
-USERDIR=$(pwd)
-
-if [[ ! -n "$OUTPUTDIR" ]]; then
-    OUTPUTDIR="$WORKDIR"
+if [[ ! -n "$OUTPUT_DIR" ]]; then
+    OUTPUT_DIR="$WORK_DIR"
 fi
 
-if [[ -n "$WORKDIR" && -d "$WORKDIR" ]]; then
-    cd "$WORKDIR"
+if [[ -n "$WORK_DIR" && -d "$WORK_DIR" ]]; then
+    cd "$WORK_DIR"
 else
-    echo "Error --the directory specified, $WORKDIR, doesn't exist."
+    echo "Error --the directory specified, $WORK_DIR, doesn't exist."
     exit 3
 fi
 
-if [[ ! -d "$OUTPUTDIR" ]]; then
+if [[ ! -d "$OUTPUT_DIR" ]]; then
     echo "Error --the output directory specified, $OUTPUTDIR, doesn't exist"
+    cd "$USER_DIR"
     exit 3
 fi
 
@@ -71,16 +71,16 @@ FILENAMES=$(ls -1 *."$EXTENSION")
 while IFS= read -r FILE || [[ -n $FILE ]]; do
    FILE_OUT="$(echo "$FILE" | awk -F '.' '{print $1}').pdf"
     if [[ $MARKDOWN -eq 0 ]]; then
-        pandoc -o "$OUTPUTDIR/$FILE_OUT" "$FILE"
+        pandoc -o "$OUTPUT_DIR/$FILE_OUT" "$FILE"
     else
-        pandoc -f markdown -o "$OUTPUTDIR/$FILE_OUT" "$FILE"
+        pandoc -f markdown -o "$OUTPUT_DIR/$FILE_OUT" "$FILE"
     fi
     if [[ $? -ne 0 ]]; then
         echo "Error processing file $FILE";
-        cd $USERDIR
+        cd $USER_DIR
         exit 4
     fi 
 done < <(printf '%s' "$FILENAMES")
 
-cd "$USERDIR"
+cd "$USER_DIR"
 exit 0
