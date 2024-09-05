@@ -1,4 +1,8 @@
-# pdf_dir.sh
+# pdf_dir.sh (archived)
+> **Warning**
+> This repository is **archived** in GitHub and will no longer be maintained here.
+> This repository lives [here](https://forja.gvisoc.com/gabriel/pdf_dir) now.
+
 This is is a bash script over `pandoc` that converts all files in a directory, matching an extension, into PDF. 
 
 By default, the output directory is the same directory where the original documents are found.
